@@ -1,0 +1,6 @@
+id_arbol  fecha_siembra  terreno  id_arbol  id_enfermedad  fecha_enfermedad  id_enfermedad  nombre       tratamiento  descripcion                   causa
+--------  -------------  -------  --------  -------------  ----------------  -------------  -----------  -----------  ----------------------------  --------------------
+1         2020-03-10     Lote H   1         1              2025-01-20        1              Royas        Fungicida X  Manchas anaranjadas en hojas  Hongo
+1         2020-03-10     Lote H   1         1              2006              1              Royas        Fungicida X  Manchas anaranjadas en hojas  Hongo
+2         2021-05-22     Lote F   2         2              2025-02-02        2              Marchitez    Fungicida Y  Decaimiento de ramas          Patógeno del suelo
+3         2019-11-05     Lote F   3         3              2025-02-05        3              Antracnosis  Cobre        Lesiones oscuras en hojas     Hongo Colletotrichum

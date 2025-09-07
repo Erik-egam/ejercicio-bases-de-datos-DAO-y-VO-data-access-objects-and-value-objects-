@@ -412,6 +412,8 @@ class FormularioModificarArbol(QDialog):
     def __init__(self):
         super().__init__()
 
+        self.formulario_enfermedad = FormularioNuevaEnfermedad()
+        
         self.id_arbol_update: int
         estiloBotones = """
             QPushButton {
@@ -557,3 +559,41 @@ class FormularioModificarArbol(QDialog):
             self.w['tabla_tarea'].setItem(
                 indice, 3, QTableWidgetItem(tarea.fecha))
 
+class FormularioNuevaEnfermedad(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle('Formulario Nueva Enfermedad Detectada')
+        self.setGeometry(100, 100, 400, 300)
+        self.w = dict()
+        self.w['label_fecha'] = QLabel('Fecha: ')
+        self.w['input_fecha'] = QLineEdit()
+        self.w['btn_guardar'] = QPushButton('Guardar')
+        self.layout_principal = QVBoxLayout()
+
+        for w in self.w.values():
+            self.layout_principal.addWidget(w)
+
+        self.setLayout(self.layout_principal)
+
+        self.w['btn_guardar'].clicked.connect(self.accept)
+
+
+class FormularioNuevoArbol(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle('Formulario Nuevo arbol')
+        self.setGeometry(100, 100, 400, 300)
+        self.w = dict()
+        self.w['label_terreno'] = QLabel('Terreno: ')
+        self.w['input_terreno'] = QLineEdit()
+        self.w['btn_guardar'] = QPushButton('Guardar')
+        self.layout_principal = QVBoxLayout()
+
+        for w in self.w.values():
+            self.layout_principal.addWidget(w)
+
+        self.setLayout(self.layout_principal)
+
+        self.w['btn_guardar'].clicked.connect(self.accept)

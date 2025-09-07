@@ -34,7 +34,7 @@ class ControladorGUI:
         # Creacion del formulario
         self.formulario_trabajador = vista_gui.FormularioNuevoTrabajador()
         self.formulario_arbol = vista_gui.FormularioNuevoArbol()
-        
+                
         # Formulario actualizar lider
         self.formulario_actualizar_Trabajador = vista_gui.FormularioModificarTrabajador()
         self.formulario_actualizar_arbol = vista_gui.FormularioModificarArbol()
@@ -97,10 +97,31 @@ class ControladorGUI:
             tareas = self.arbolAux.get_tarea_by_arbol_id(arbol=self.formulario_actualizar_arbol.id_arbol_update)
             self.formulario_actualizar_arbol.llenarTablaTareas(tareas)            
             self.formulario_actualizar_arbol.w['label_id'].setText(self.formulario_actualizar_arbol.id_arbol_update)
-                       
             
             self.formulario_actualizar_arbol.show()
                 
+        
+        
+        def handler_nueva_enfermedad():
+            self.formulario_actualizar_arbol.formulario_enfermedad.show()
+
+        def handler_formulario_insertar_enfermedad():
+            tupla_nuevo_arbol = (self.formulario_actualizar_arbol.id_arbol_update,self.formulario_actualizar_arbol.formulario_enfermedad.w['input_fecha'].text())
+            dml.insert_enfermedad(nuevo_arbol = tupla_nuevo_arbol)
+        
+        
+        
+        def handler_nueva_tarea():
+            self.formulario_enfermedad.show()
+
+        def handler_formulario_insertar_tarea():
+            tupla_nuevo_arbol = (self.formulario_arbol.w['input_fecha'].text())
+            dml.insert_tarea(nuevo_arbol = tupla_nuevo_arbol)
+        
+        
+        
+        
+        
         
         # Botones pantalla principal
         
@@ -130,6 +151,7 @@ class ControladorGUI:
         self.ventana_arboles.w['btn_Registrar_arbol'].clicked.connect(handler_nuevo_arbol)
         self.formulario_arbol.w['btn_guardar'].clicked.connect(handler_formulario_insertar_arbol)
         self.formulario_arbol.w['btn_guardar'].clicked.connect(handler_llenar_tabla_arboles)
+        self.formulario_actualizar_arbol.w['btn_guardar'].clicked.connect(handler_llenar_tabla_arboles)
         
         # Modificar 
         self.ventana_trabajadores.w['tabla_trabajador'].cellDoubleClicked.connect(handler_modificacion_trabajador)
@@ -137,7 +159,9 @@ class ControladorGUI:
         
         self.ventana_arboles.w['tabla_arbol'].cellDoubleClicked.connect(handler_modificacion_arbol)
         self.ventana_arboles.w['tabla_arbol'].cellDoubleClicked.connect(handler_modificacion_arbol)
-        self.formulario_actualizar_arbol.w['btn_guardar'].clicked.connect(handler_llenar_tabla_arboles)
+        self.formulario_actualizar_arbol.w['btn_registrar_enfermedad'].clicked.connect(handler_nueva_enfermedad)
+        self.formulario_actualizar_arbol.formulario_enfermedad.w['btn_guardar'].clicked.connect(handler_formulario_insertar_enfermedad)
+        
         
         
         

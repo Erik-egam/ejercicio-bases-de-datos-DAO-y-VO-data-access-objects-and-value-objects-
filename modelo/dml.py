@@ -78,3 +78,19 @@ def update_arbol(cambios:dict):
         cursor.execute(sql)
         conector.commit()
         return cursor.lastrowid
+    
+    
+def insert_enfermedad(nuevo_arbol: tuple) -> int:
+    with cdb.crear_conexion() as conector:
+        print(nuevo_arbol)
+        sql = f"""INSERT INTO Arboles_Enfermedades (
+            id_arbol,id_enfermedad, fecha_enfermedad
+            ) VALUES (
+                """
+        sql += f"{nuevo_arbol[0]},"
+        sql += f"1,"
+        sql += f"'{nuevo_arbol[1]}')"
+        cursor = conector.cursor()
+        cursor.execute(sql)
+        conector.commit()
+        return cursor.lastrowid

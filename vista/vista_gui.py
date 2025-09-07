@@ -413,9 +413,35 @@ class FormularioModificarArbol(QDialog):
         super().__init__()
 
         self.id_arbol_update: int
-
+        estiloBotones = """
+            QPushButton {
+                background-color: #2e86de;
+                color: white;
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background-color: #1b4f72;
+            }
+        """
+        estiloTablas = """
+            QTableWidget {
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                gridline-color: #ddd;
+                font-size: 12px;
+            }
+            QHeaderView::section {
+                background-color: #2196F3;
+                color: white;
+                padding: 5px;
+                border: none;
+            }
+        """
         self.setWindowTitle('Formulario Modificar arbol')
-        self.setGeometry(100, 100, 1500, 400)
+        self.setGeometry(100, 100, 1500, 800)
 
         self.w = dict()
         self.w['label_id'] = QLabel("ID: ____")
@@ -436,18 +462,7 @@ class FormularioModificarArbol(QDialog):
         self.w['label_terreno'].setFont(font_label)
 
         # Estilo del botón
-        self.w['btn_guardar'].setStyleSheet("""
-            QPushButton {
-                background-color: #2e86de;
-                color: white;
-                border-radius: 8px;
-                padding: 6px 12px;
-                font-size: 11pt;
-            }
-            QPushButton:hover {
-                background-color: #1b4f72;
-            }
-        """)
+        self.w['btn_guardar'].setStyleSheet(estiloBotones)
 
         # Layout del formulario
         form_layout = QFormLayout()
@@ -475,63 +490,38 @@ class FormularioModificarArbol(QDialog):
         self.w['btn_guardar'].clicked.connect(self.accept)
         
         # tabla
+                
         self.w['tabla_enfermedad'] = QTableWidget()
         self.w['tabla_enfermedad'].horizontalHeader(
         ).setSectionResizeMode(QHeaderView.Stretch)
-        self.w['tabla_enfermedad'].setStyleSheet("""
-            QTableWidget {
-                background-color: white;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                gridline-color: #ddd;
-                font-size: 12px;
-            }
-            QHeaderView::section {
-                background-color: #2196F3;
-                color: white;
-                padding: 5px;
-                border: none;
-            }
-        """)
+        self.w['tabla_enfermedad'].setStyleSheet(estiloTablas)
         
-        self.w['btn_guardar'] = QPushButton('Guardar')
-        self.w['btn_guardar'].setStyleSheet("""
-            QPushButton {
-                background-color: #2e86de;
-                color: white;
-                border-radius: 8px;
-                padding: 6px 12px;
-                font-size: 11pt;
-            }
-            QPushButton:hover {
-                background-color: #1b4f72;
-            }
-        """)
-        self.layout_principal.addWidget(self.w['tabla_enfermedad'])
-        botones_layout.addWidget(self.w['btn_guardar'])
+        self.w['btn_registrar_enfermedad'] = QPushButton('Registrar Enfermedad')
+        self.w['btn_registrar_enfermedad'].setStyleSheet(estiloBotones)
+        
+        # Layout para tabla y botón juntos
+        layout_enfermedad = QVBoxLayout()
+        layout_enfermedad.addWidget(self.w['tabla_enfermedad'])
+        layout_enfermedad.addWidget(self.w['btn_registrar_enfermedad'])
+
+        self.layout_principal.addLayout(layout_enfermedad)
         
         # tabla
         self.w['tabla_tarea'] = QTableWidget()
         self.w['tabla_tarea'].horizontalHeader(
         ).setSectionResizeMode(QHeaderView.Stretch)
-        self.w['tabla_tarea'].setStyleSheet("""
-            QTableWidget {
-                background-color: white;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                gridline-color: #ddd;
-                font-size: 12px;
-            }
-            QHeaderView::section {
-                background-color: #2196F3;
-                color: white;
-                padding: 5px;
-                border: none;
-            }
-        """)
+        self.w['tabla_tarea'].setStyleSheet(estiloTablas)
         
-        self.layout_principal.addWidget(self.w['tabla_tarea'])
-        # self.layout_principal.addWidget(self.w['tabla_tarea'])
+        self.w['btn_registrar_tarea'] = QPushButton('Registrar Tarea')
+        self.w['btn_registrar_tarea'].setStyleSheet(estiloBotones)
+        
+        # Layout para tabla y botón juntos
+        layout_tarea = QVBoxLayout()
+        layout_tarea.addWidget(self.w['tabla_tarea'])
+        layout_tarea.addWidget(self.w['btn_registrar_tarea'])
+
+        self.layout_principal.addLayout(layout_tarea)
+        
         
     def llenarTablaEnfermedades(self, listado_enfermedades):
         self.w['tabla_enfermedad'].setColumnCount(4)

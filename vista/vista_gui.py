@@ -493,7 +493,22 @@ class FormularioModificarArbol(QDialog):
                 border: none;
             }
         """)
+        
+        self.w['btn_guardar'] = QPushButton('Guardar')
+        self.w['btn_guardar'].setStyleSheet("""
+            QPushButton {
+                background-color: #2e86de;
+                color: white;
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background-color: #1b4f72;
+            }
+        """)
         self.layout_principal.addWidget(self.w['tabla_enfermedad'])
+        botones_layout.addWidget(self.w['btn_guardar'])
         
         # tabla
         self.w['tabla_tarea'] = QTableWidget()
@@ -515,6 +530,7 @@ class FormularioModificarArbol(QDialog):
             }
         """)
         
+        self.layout_principal.addWidget(self.w['tabla_tarea'])
         # self.layout_principal.addWidget(self.w['tabla_tarea'])
         
     def llenarTablaEnfermedades(self, listado_enfermedades):
@@ -534,20 +550,20 @@ class FormularioModificarArbol(QDialog):
             self.w['tabla_enfermedad'].setItem(
                 indice, 3, QTableWidgetItem(enfermedad.fecha_enfermedad))
             
-    # def llenarTablaTareas(self, listado_tareas):
-    #     self.w['tabla_tarea'].setColumnCount(4)
-    #     self.w['tabla_tarea'].setHorizontalHeaderLabels(
-    #         ["ID", "nombre", "mezcla", "fecha"]
-    #     )
-    #     self.w['tabla_tarea'].setRowCount(len(listado_tareas))
-    #     for indice, tarea in enumerate(listado_tareas):
-    #         itemID = QTableWidgetItem(str(tarea.id))
-    #         # itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
-    #         self.w['tabla_tarea'].setItem(indice, 0, itemID)
-    #         self.w['tabla_tarea'].setItem(
-    #             indice, 1, QTableWidgetItem(tarea.nombre))
-    #         self.w['tabla_tarea'].setItem(
-    #             indice, 2, QTableWidgetItem(tarea.mezcla))
-    #         self.w['tabla_tarea'].setItem(
-    #             indice, 3, QTableWidgetItem(tarea.fecha))
+    def llenarTablaTareas(self, listado_tareas):
+        self.w['tabla_tarea'].setColumnCount(4)
+        self.w['tabla_tarea'].setHorizontalHeaderLabels(
+            ["ID", "nombre", "mezcla", "fecha"]
+        )
+        self.w['tabla_tarea'].setRowCount(len(listado_tareas))
+        for indice, tarea in enumerate(listado_tareas):
+            itemID = QTableWidgetItem(str(tarea.id))
+            # itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
+            self.w['tabla_tarea'].setItem(indice, 0, itemID)
+            self.w['tabla_tarea'].setItem(
+                indice, 1, QTableWidgetItem(tarea.nombre))
+            self.w['tabla_tarea'].setItem(
+                indice, 2, QTableWidgetItem(tarea.mezcla))
+            self.w['tabla_tarea'].setItem(
+                indice, 3, QTableWidgetItem(tarea.fecha))
 

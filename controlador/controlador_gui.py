@@ -94,8 +94,8 @@ class ControladorGUI:
             self.formulario_actualizar_arbol.id_arbol_update = self.ventana_arboles.w['tabla_arbol'].item(fila,0).text()
             enfermedades = self.arbolAux.get_enfermedad_by_arbol_id(arbol=self.formulario_actualizar_arbol.id_arbol_update)
             self.formulario_actualizar_arbol.llenarTablaEnfermedades(enfermedades)            
-            # tareas = self.arbolAux.get_tarea_by_arbol_id(arbol=self.formulario_actualizar_arbol.id_arbol_update)
-            # self.formulario_actualizar_arbol.llenarTablaTareas(tareas)            
+            tareas = self.arbolAux.get_tarea_by_arbol_id(arbol=self.formulario_actualizar_arbol.id_arbol_update)
+            self.formulario_actualizar_arbol.llenarTablaTareas(tareas)            
             self.formulario_actualizar_arbol.w['label_id'].setText(self.formulario_actualizar_arbol.id_arbol_update)
                        
             

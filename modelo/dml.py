@@ -80,16 +80,32 @@ def update_arbol(cambios:dict):
         return cursor.lastrowid
     
     
-def insert_enfermedad(nuevo_arbol: tuple) -> int:
+def insert_enfermedad(nueva_enfermedad: tuple) -> int:
     with cdb.crear_conexion() as conector:
-        print(nuevo_arbol)
+        print(nueva_enfermedad)
         sql = f"""INSERT INTO Arboles_Enfermedades (
             id_arbol,id_enfermedad, fecha_enfermedad
             ) VALUES (
                 """
-        sql += f"{nuevo_arbol[0]},"
+        sql += f"{nueva_enfermedad[0]},"
         sql += f"1,"
-        sql += f"'{nuevo_arbol[1]}')"
+        sql += f"'{nueva_enfermedad[1]}')"
+        cursor = conector.cursor()
+        cursor.execute(sql)
+        conector.commit()
+        return cursor.lastrowid
+
+def insert_tarea(nueva_tarea: tuple) -> int:
+    with cdb.crear_conexion() as conector:
+        print(nueva_tarea)
+        sql = f"""INSERT INTO Tareas (
+            id_arbol,id_tipo_tarea, fecha_tarea, mezcla
+            ) VALUES (
+                """
+        sql += f"{nueva_tarea[0]},"
+        sql += f"2,"
+        sql += f"'{nueva_tarea[1]}',"
+        sql += f"'{nueva_tarea[2]}')"
         cursor = conector.cursor()
         cursor.execute(sql)
         conector.commit()

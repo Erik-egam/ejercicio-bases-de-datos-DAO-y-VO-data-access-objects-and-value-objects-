@@ -413,6 +413,7 @@ class FormularioModificarArbol(QDialog):
         super().__init__()
 
         self.formulario_enfermedad = FormularioNuevaEnfermedad()
+        self.formulario_tarea = FormularioNuevaTarea()
         
         self.id_arbol_update: int
         estiloBotones = """
@@ -526,38 +527,32 @@ class FormularioModificarArbol(QDialog):
         
         
     def llenarTablaEnfermedades(self, listado_enfermedades):
-        self.w['tabla_enfermedad'].setColumnCount(4)
+        self.w['tabla_enfermedad'].setColumnCount(3)
         self.w['tabla_enfermedad'].setHorizontalHeaderLabels(
-            ["ID", "nombre", "causa", "fecha enfermedad"]
+            ["nombre", "causa", "fecha enfermedad"]
         )
         self.w['tabla_enfermedad'].setRowCount(len(listado_enfermedades))
         for indice, enfermedad in enumerate(listado_enfermedades):
-            itemID = QTableWidgetItem(str(enfermedad.id_enfermedad))
-            # itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
-            self.w['tabla_enfermedad'].setItem(indice, 0, itemID)
             self.w['tabla_enfermedad'].setItem(
-                indice, 1, QTableWidgetItem(enfermedad.nombre))
+                indice, 0, QTableWidgetItem(enfermedad.nombre))
             self.w['tabla_enfermedad'].setItem(
-                indice, 2, QTableWidgetItem(enfermedad.causa))
+                indice, 1, QTableWidgetItem(enfermedad.causa))
             self.w['tabla_enfermedad'].setItem(
-                indice, 3, QTableWidgetItem(enfermedad.fecha_enfermedad))
+                indice, 2, QTableWidgetItem(enfermedad.fecha_enfermedad))
             
     def llenarTablaTareas(self, listado_tareas):
-        self.w['tabla_tarea'].setColumnCount(4)
+        self.w['tabla_tarea'].setColumnCount(3)
         self.w['tabla_tarea'].setHorizontalHeaderLabels(
-            ["ID", "nombre", "mezcla", "fecha"]
+            ["nombre", "mezcla", "fecha"]
         )
         self.w['tabla_tarea'].setRowCount(len(listado_tareas))
         for indice, tarea in enumerate(listado_tareas):
-            itemID = QTableWidgetItem(str(tarea.id))
-            # itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
-            self.w['tabla_tarea'].setItem(indice, 0, itemID)
             self.w['tabla_tarea'].setItem(
-                indice, 1, QTableWidgetItem(tarea.nombre))
+                indice, 0, QTableWidgetItem(tarea.nombre))
             self.w['tabla_tarea'].setItem(
-                indice, 2, QTableWidgetItem(tarea.mezcla))
+                indice, 1, QTableWidgetItem(tarea.mezcla))
             self.w['tabla_tarea'].setItem(
-                indice, 3, QTableWidgetItem(tarea.fecha))
+                indice, 2, QTableWidgetItem(tarea.fecha))
 
 class FormularioNuevaEnfermedad(QDialog):
     def __init__(self):
@@ -579,15 +574,17 @@ class FormularioNuevaEnfermedad(QDialog):
         self.w['btn_guardar'].clicked.connect(self.accept)
 
 
-class FormularioNuevoArbol(QDialog):
+class FormularioNuevaTarea(QDialog):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle('Formulario Nuevo arbol')
         self.setGeometry(100, 100, 400, 300)
         self.w = dict()
-        self.w['label_terreno'] = QLabel('Terreno: ')
-        self.w['input_terreno'] = QLineEdit()
+        self.w['label_fecha'] = QLabel('Fecha: ')
+        self.w['input_fecha'] = QLineEdit()
+        self.w['label_mezcla'] = QLabel('Mezcla: ')
+        self.w['input_mezcla'] = QLineEdit()
         self.w['btn_guardar'] = QPushButton('Guardar')
         self.layout_principal = QVBoxLayout()
 
@@ -597,3 +594,5 @@ class FormularioNuevoArbol(QDialog):
         self.setLayout(self.layout_principal)
 
         self.w['btn_guardar'].clicked.connect(self.accept)
+
+

@@ -139,6 +139,18 @@ class ControladorGUI:
             )
             dml.insert_tarea(nueva_tarea=tupla_nueva_tarea)
 
+        
+        def handler_modificacion_tarea(fila: int, columna: int):
+            print(f"Evento Doble Click -> {fila} {columna}")
+
+            self.formulario_actualizar_arbol.formulario_modificar_tarea.id_tarea_update = self.formulario_actualizar_arbol.w['tabla_tarea'].item(
+                fila, 0).text()
+            self.formulario_actualizar_arbol.formulario_modificar_tarea.w['label_id'].setText(
+                self.formulario_actualizar_arbol.formulario_modificar_tarea.id_tarea_update)
+
+            self.formulario_actualizar_arbol.formulario_modificar_tarea.show()
+
+        
         # Botones pantalla principal
 
         # Al inicio de cada linea de codigo esta el nombre de la ventana la cual va a activar el handler
@@ -199,3 +211,6 @@ class ControladorGUI:
         
         self.formulario_actualizar_arbol.w['tabla_enfermedad'].cellDoubleClicked.connect(
             handler_modificacion_enfermedad)
+        
+        self.formulario_actualizar_arbol.w['tabla_tarea'].cellDoubleClicked.connect(
+            handler_modificacion_tarea)

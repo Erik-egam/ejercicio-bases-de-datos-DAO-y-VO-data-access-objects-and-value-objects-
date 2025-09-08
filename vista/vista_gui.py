@@ -415,7 +415,7 @@ class FormularioModificarArbol(QDialog):
         self.formulario_enfermedad = FormularioNuevaEnfermedad()
         self.formulario_tarea = FormularioNuevaTarea()
         self.formulario_modificar_enfermedad = FormularioModificarEnfermedad()
-        
+        self.formulario_modificar_tarea = FormularioModificarTarea()
         self.id_arbol_update: int
         
         estiloBotones = """
@@ -543,18 +543,21 @@ class FormularioModificarArbol(QDialog):
                 indice, 2, QTableWidgetItem(enfermedad.fecha_enfermedad))
             
     def llenarTablaTareas(self, listado_tareas):
-        self.w['tabla_tarea'].setColumnCount(3)
+        self.w['tabla_tarea'].setColumnCount(4)
         self.w['tabla_tarea'].setHorizontalHeaderLabels(
-            ["nombre", "mezcla", "fecha"]
+            ["Id","nombre", "mezcla", "fecha"]
         )
         self.w['tabla_tarea'].setRowCount(len(listado_tareas))
         for indice, tarea in enumerate(listado_tareas):
+            itemID = QTableWidgetItem(str(tarea.id))
+            itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
+            self.w['tabla_tarea'].setItem(indice, 0, itemID)
             self.w['tabla_tarea'].setItem(
-                indice, 0, QTableWidgetItem(tarea.nombre))
+                indice, 1, QTableWidgetItem(tarea.nombre))
             self.w['tabla_tarea'].setItem(
-                indice, 1, QTableWidgetItem(tarea.mezcla))
+                indice, 2, QTableWidgetItem(tarea.mezcla))
             self.w['tabla_tarea'].setItem(
-                indice, 2, QTableWidgetItem(tarea.fecha))
+                indice, 3, QTableWidgetItem(tarea.fecha))
 
 class FormularioNuevaEnfermedad(QDialog):
     def __init__(self):
@@ -665,44 +668,33 @@ class FormularioModificarEnfermedad(QDialog):
         self.w['btn_guardar'].clicked.connect(self.accept)
 
 
-class FormularioModificarTrabajador(QDialog):
+class FormularioModificarTarea(QDialog):
     def __init__(self):
         super().__init__()
 
-        self.id_trabajador_update: int
+        self.id_tarea_update: int
 
         self.setWindowTitle('Formulario Modificar Trabajador')
         self.setGeometry(100, 100, 400, 200)
 
         self.w = dict()
         self.w['label_id'] = QLabel("ID: ____")
-        self.w['label_nombre'] = QLabel('Nuevo Nombre:')
-        self.w['input_nombre'] = QLineEdit()
-        self.w['label_telefono'] = QLabel('Nuevo Telefono:')
-        self.w['input_telefono'] = QLineEdit()
-        self.w['label_EPS'] = QLabel('Nueva EPS:')
-        self.w['input_EPS'] = QLineEdit()
-        self.w['label_ARL'] = QLabel('Nueva ARL:')
-        self.w['input_ARL'] = QLineEdit()
-
+        self.w['label_fecha'] = QLabel('Nueva fecha:')
+        self.w['input_fecha'] = QLineEdit()
+        self.w['label_mezcla'] = QLabel('Nueva Mezcla:')
+        self.w['input_mezcla'] = QLineEdit()
         self.w['btn_guardar'] = QPushButton('Guardar')
 
         # Placeholder en el campo de texto
-        self.w['input_nombre'].setPlaceholderText("Ingrese el nuevo nombre...")
-        self.w['input_telefono'].setPlaceholderText(
-            "Ingrese el nuevo telefono...")
-        self.w['input_EPS'].setPlaceholderText("Ingrese la Nueva EPS...")
-        self.w['input_ARL'].setPlaceholderText("Ingrese la nueva ARL")
+        self.w['input_fecha'].setPlaceholderText("Ingrese el nueva fecha...")
+        self.w['input_mezcla'].setPlaceholderText("Ingrese el nueva mezcla...")
 
         # Fuente más clara para labels
         font_label = QFont()
         font_label.setPointSize(10)
         self.w['label_id'].setFont(font_label)
-        self.w['label_nombre'].setFont(font_label)
-        self.w['label_telefono'].setFont(font_label)
-        self.w['label_EPS'].setFont(font_label)
-        self.w['label_ARL'].setFont(font_label)
-
+        self.w['label_fecha'].setFont(font_label)
+        self.w['label_mezcla'].setFont(font_label)
         # Estilo del botón
         self.w['btn_guardar'].setStyleSheet("""
             QPushButton {
@@ -720,10 +712,8 @@ class FormularioModificarTrabajador(QDialog):
         # Layout del formulario
         form_layout = QFormLayout()
         form_layout.addRow(self.w['label_id'])
-        form_layout.addRow(self.w['label_nombre'], self.w['input_nombre'])
-        form_layout.addRow(self.w['label_telefono'], self.w['input_telefono'])
-        form_layout.addRow(self.w['label_EPS'], self.w['input_EPS'])
-        form_layout.addRow(self.w['label_ARL'], self.w['input_ARL'])
+        form_layout.addRow(self.w['label_fecha'], self.w['input_fecha'])
+        form_layout.addRow(self.w['label_mezcla'], self.w['input_mezcla'])
         form_layout.setVerticalSpacing(8)
         # Botón alineado a la derecha
         botones_layout = QHBoxLayout()
@@ -737,11 +727,9 @@ class FormularioModificarTrabajador(QDialog):
         self.layout_principal.addLayout(botones_layout)
 
         def guardar():
-            dml.update_trabajador({"id": int(self.id_trabajador_update),
-                                   "nombre": self.w['input_nombre'].text(),
-                                   "telefono": self.w['input_telefono'].text(),
-                                   "eps": self.w['input_EPS'].text(),
-                                   "arl": self.w['input_ARL'].text(),
+            dml.update_tarea({"id": int(self.id_tarea_update),
+                                   "fecha": self.w['input_fecha'].text(),
+                                   "mezcla": self.w['input_mezcla'].text()
                                    })
         self.setLayout(self.layout_principal)
 

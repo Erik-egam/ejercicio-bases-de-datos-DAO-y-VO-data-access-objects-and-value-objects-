@@ -128,3 +128,23 @@ def update_enfermedad(cambios:dict):
         cursor.execute(sql)
         conector.commit()
         return cursor.lastrowid
+    
+
+def update_tarea(cambios:dict):
+    with cdb.crear_conexion() as conector:
+        print(cambios)
+        sql = """
+        UPDATE Tareas SET
+        """
+        if cambios['fecha']:
+            sql += f"fecha_tarea = '{cambios['fecha']}',"
+        
+        if cambios['mezcla']:
+            sql += f" mezcla = '{cambios['mezcla']}',"
+            
+        sql = sql[:-1]
+        sql += f" WHERE Tareas.id_tarea = {cambios["id"]};"
+        cursor = conector.cursor()
+        cursor.execute(sql)
+        conector.commit()
+        return cursor.lastrowid

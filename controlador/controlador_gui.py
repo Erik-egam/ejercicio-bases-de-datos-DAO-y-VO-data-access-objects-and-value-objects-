@@ -115,6 +115,19 @@ class ControladorGUI:
                                       self.formulario_actualizar_arbol.formulario_enfermedad.w['input_fecha'].text())
             dml.insert_enfermedad(nueva_enfermedad=tupla_nueva_enfermedad)
 
+
+        def handler_modificacion_enfermedad(fila: int, columna: int):
+            print(f"Evento Doble Click -> {fila} {columna}")
+
+            self.formulario_actualizar_arbol.formulario_modificar_enfermedad.id_enfermedad_update = fila + 1
+            self.formulario_actualizar_arbol.formulario_modificar_enfermedad.id_arbol_update = self.formulario_actualizar_arbol.id_arbol_update
+            self.formulario_actualizar_arbol.formulario_modificar_enfermedad.w['label_id'].setText(
+                str(self.formulario_actualizar_arbol.formulario_modificar_enfermedad.id_enfermedad_update))
+
+            self.formulario_actualizar_arbol.formulario_modificar_enfermedad.show()
+            # No funciona correctamente problema de diseño de la base de datos
+            
+            
         def handler_nueva_tarea():
             self.formulario_actualizar_arbol.formulario_tarea.show()
 
@@ -183,5 +196,6 @@ class ControladorGUI:
 
         self.ventana_arboles.w['tabla_arbol'].cellDoubleClicked.connect(
             handler_modificacion_arbol)
-        self.ventana_arboles.w['tabla_arbol'].cellDoubleClicked.connect(
-            handler_modificacion_arbol)
+        
+        self.formulario_actualizar_arbol.w['tabla_enfermedad'].cellDoubleClicked.connect(
+            handler_modificacion_enfermedad)

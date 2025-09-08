@@ -414,8 +414,10 @@ class FormularioModificarArbol(QDialog):
 
         self.formulario_enfermedad = FormularioNuevaEnfermedad()
         self.formulario_tarea = FormularioNuevaTarea()
+        self.formulario_modificar_enfermedad = FormularioModificarEnfermedad()
         
         self.id_arbol_update: int
+        
         estiloBotones = """
             QPushButton {
                 background-color: #2e86de;
@@ -596,3 +598,152 @@ class FormularioNuevaTarea(QDialog):
         self.w['btn_guardar'].clicked.connect(self.accept)
 
 
+class FormularioModificarEnfermedad(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.id_enfermedad_update: int
+        self.id_arbol_update : int
+
+        self.setWindowTitle('Formulario Modificar Trabajador')
+        self.setGeometry(100, 100, 400, 200)
+
+        self.w = dict()
+        self.w['label_id'] = QLabel("ID: ____")
+        self.w['label_fecha'] = QLabel('Nueva Fecha:')
+        self.w['input_fecha'] = QLineEdit()
+
+        self.w['btn_guardar'] = QPushButton('Guardar')
+
+        # Placeholder en el campo de texto
+        self.w['input_fecha'].setPlaceholderText("Ingrese el nueva fecha...")
+        
+        # Fuente más clara para labels
+        font_label = QFont()
+        font_label.setPointSize(10)
+        self.w['label_id'].setFont(font_label)
+        self.w['label_fecha'].setFont(font_label)
+
+        # Estilo del botón
+        self.w['btn_guardar'].setStyleSheet("""
+            QPushButton {
+                background-color: #2e86de;
+                color: white;
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background-color: #1b4f72;
+            }
+        """)
+
+        # Layout del formulario
+        form_layout = QFormLayout()
+        form_layout.addRow(self.w['label_id'])
+        form_layout.addRow(self.w['label_fecha'], self.w['input_fecha'])
+        form_layout.setVerticalSpacing(8)
+        # Botón alineado a la derecha
+        botones_layout = QHBoxLayout()
+        botones_layout.addStretch()
+        botones_layout.addWidget(self.w['btn_guardar'])
+
+        # Layout principal con margen
+        self.layout_principal = QVBoxLayout()
+        self.layout_principal.setContentsMargins(20, 20, 20, 20)
+        self.layout_principal.addLayout(form_layout)
+        self.layout_principal.addLayout(botones_layout)
+
+        def guardar():
+            dml.update_enfermedad({"id_enfermedad": int(self.id_enfermedad_update),
+                                   "id_arbol": int(self.id_arbol_update),
+                                   "fecha": self.w['input_fecha'].text()
+                                   })
+        self.setLayout(self.layout_principal)
+
+        self.w['btn_guardar'].clicked.connect(guardar)
+        self.w['btn_guardar'].clicked.connect(self.accept)
+
+
+class FormularioModificarTrabajador(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.id_trabajador_update: int
+
+        self.setWindowTitle('Formulario Modificar Trabajador')
+        self.setGeometry(100, 100, 400, 200)
+
+        self.w = dict()
+        self.w['label_id'] = QLabel("ID: ____")
+        self.w['label_nombre'] = QLabel('Nuevo Nombre:')
+        self.w['input_nombre'] = QLineEdit()
+        self.w['label_telefono'] = QLabel('Nuevo Telefono:')
+        self.w['input_telefono'] = QLineEdit()
+        self.w['label_EPS'] = QLabel('Nueva EPS:')
+        self.w['input_EPS'] = QLineEdit()
+        self.w['label_ARL'] = QLabel('Nueva ARL:')
+        self.w['input_ARL'] = QLineEdit()
+
+        self.w['btn_guardar'] = QPushButton('Guardar')
+
+        # Placeholder en el campo de texto
+        self.w['input_nombre'].setPlaceholderText("Ingrese el nuevo nombre...")
+        self.w['input_telefono'].setPlaceholderText(
+            "Ingrese el nuevo telefono...")
+        self.w['input_EPS'].setPlaceholderText("Ingrese la Nueva EPS...")
+        self.w['input_ARL'].setPlaceholderText("Ingrese la nueva ARL")
+
+        # Fuente más clara para labels
+        font_label = QFont()
+        font_label.setPointSize(10)
+        self.w['label_id'].setFont(font_label)
+        self.w['label_nombre'].setFont(font_label)
+        self.w['label_telefono'].setFont(font_label)
+        self.w['label_EPS'].setFont(font_label)
+        self.w['label_ARL'].setFont(font_label)
+
+        # Estilo del botón
+        self.w['btn_guardar'].setStyleSheet("""
+            QPushButton {
+                background-color: #2e86de;
+                color: white;
+                border-radius: 8px;
+                padding: 6px 12px;
+                font-size: 11pt;
+            }
+            QPushButton:hover {
+                background-color: #1b4f72;
+            }
+        """)
+
+        # Layout del formulario
+        form_layout = QFormLayout()
+        form_layout.addRow(self.w['label_id'])
+        form_layout.addRow(self.w['label_nombre'], self.w['input_nombre'])
+        form_layout.addRow(self.w['label_telefono'], self.w['input_telefono'])
+        form_layout.addRow(self.w['label_EPS'], self.w['input_EPS'])
+        form_layout.addRow(self.w['label_ARL'], self.w['input_ARL'])
+        form_layout.setVerticalSpacing(8)
+        # Botón alineado a la derecha
+        botones_layout = QHBoxLayout()
+        botones_layout.addStretch()
+        botones_layout.addWidget(self.w['btn_guardar'])
+
+        # Layout principal con margen
+        self.layout_principal = QVBoxLayout()
+        self.layout_principal.setContentsMargins(20, 20, 20, 20)
+        self.layout_principal.addLayout(form_layout)
+        self.layout_principal.addLayout(botones_layout)
+
+        def guardar():
+            dml.update_trabajador({"id": int(self.id_trabajador_update),
+                                   "nombre": self.w['input_nombre'].text(),
+                                   "telefono": self.w['input_telefono'].text(),
+                                   "eps": self.w['input_EPS'].text(),
+                                   "arl": self.w['input_ARL'].text(),
+                                   })
+        self.setLayout(self.layout_principal)
+
+        self.w['btn_guardar'].clicked.connect(guardar)
+        self.w['btn_guardar'].clicked.connect(self.accept)

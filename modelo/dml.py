@@ -110,3 +110,21 @@ def insert_tarea(nueva_tarea: tuple) -> int:
         cursor.execute(sql)
         conector.commit()
         return cursor.lastrowid
+    
+    
+    
+    
+def update_enfermedad(cambios:dict):
+    with cdb.crear_conexion() as conector:
+        print(cambios)
+        sql = """
+        UPDATE Arboles_Enfermedades SET
+        """
+
+        sql += f"fecha_enfermedad = '{cambios['fecha']}' "
+        
+        sql += f"WHERE Arboles_Enfermedades.id_arbol = {cambios["id_arbol"]} AND Arboles_Enfermedades.id_enfermedad = {cambios['id_enfermedad']};"
+        cursor = conector.cursor()
+        cursor.execute(sql)
+        conector.commit()
+        return cursor.lastrowid

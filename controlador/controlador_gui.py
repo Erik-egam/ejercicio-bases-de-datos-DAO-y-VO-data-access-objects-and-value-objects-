@@ -30,6 +30,7 @@ class ControladorGUI:
         self.ventana_principal = vista_gui.VentanaPrincipal()
         self.ventana_trabajadores = vista_gui.VentanaTrabajadores()
         self.ventana_arboles = vista_gui.VentanaArboles()
+        self.ventana_recolectas = vista_gui.VentanaRecolectas()
 
         # Creacion del formulario
         self.formulario_trabajador = vista_gui.FormularioNuevoTrabajador()
@@ -139,7 +140,7 @@ class ControladorGUI:
             )
             dml.insert_tarea(nueva_tarea=tupla_nueva_tarea)
 
-        
+    
         def handler_modificacion_tarea(fila: int, columna: int):
             print(f"Evento Doble Click -> {fila} {columna}")
 
@@ -151,6 +152,12 @@ class ControladorGUI:
             self.formulario_actualizar_arbol.formulario_modificar_tarea.show()
 
         
+        def handler_ventana_recolectas():
+            self.ventana_recolectas.llenarTabla()
+            self.ventana_recolectas.show()
+
+        
+        
         # Botones pantalla principal
 
         # Al inicio de cada linea de codigo esta el nombre de la ventana la cual va a activar el handler
@@ -160,6 +167,9 @@ class ControladorGUI:
             handler_ventana_trabajadores)
         self.ventana_principal.w['btn_Trabajadores'].clicked.connect(
             handler_llenar_tabla_trabajadores)
+
+        self.ventana_principal.w['btn_recolectas'].clicked.connect(
+            handler_ventana_recolectas)
 
         self.ventana_principal.w['btn_Arboles'].clicked.connect(
             handler_ventana_arboles)

@@ -41,18 +41,18 @@ class VentanaPrincipal(QWidget):
         # botones
         self.w['btn_Trabajadores'] = QPushButton("Ventana de Trabajadores")
         self.w['btn_Arboles'] = QPushButton("Ventana de Árboles")
-        self.w['btn_Tareas'] = QPushButton("Ventana de Tareas")
+        self.w['btn_Recolectas'] = QPushButton("Ventana de las recolectas con mayor calidad")
 
         # aplicar estilo a botones
-        for key in ['btn_Trabajadores', 'btn_Arboles', 'btn_Tareas']:
-            self.w[key].setMinimumHeight(50)
+        for key in ['btn_Trabajadores', 'btn_Arboles', 'btn_Recolectas']:
+            self.w[key].setMinimumHeight(200)
             self.w[key].setStyleSheet("""
                 QPushButton {
                     background-color: #4CAF50;
                     color: white;
                     border-radius: 10px;
                     font-size: 14px;
-                    padding: 10px;
+                    padding: 40px;
                 }
                 QPushButton:hover {
                     background-color: #45a049;
@@ -65,7 +65,7 @@ class VentanaPrincipal(QWidget):
         frame_layout.setSpacing(20)
         frame_layout.addWidget(self.w['btn_Trabajadores'])
         frame_layout.addWidget(self.w['btn_Arboles'])
-        frame_layout.addWidget(self.w['btn_Tareas'])
+        frame_layout.addWidget(self.w['btn_Recolectas'])
 
         self.w['frame_menu'].setStyleSheet("""
             QFrame {
@@ -86,6 +86,61 @@ class VentanaPrincipal(QWidget):
 
         self.setLayout(self.layout_principal)
 
+class VentanaRecolectas(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Sistema Reporte")
+        self.setGeometry(100, 100, 800, 600)
+
+        self.w = dict()
+
+        # título
+        self.w['lbl_titulo'] = QLabel("Administración de Reporte")
+        self.w['lbl_titulo'].setFont(QFont("Arial",25, QFont.Bold))
+        self.w['lbl_titulo'].setAlignment(Qt.AlignCenter)
+
+        # tabla
+        self.w['tabla_recolecta'] = QTableWidget()
+        self.w['tabla_recolecta'].horizontalHeader(
+        ).setSectionResizeMode(QHeaderView.Stretch)
+        self.w['tabla_recolecta'].setStyleSheet("""
+            QTableWidget {
+                background-color: white;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                gridline-color: #ddd;
+                font-size: 12px;
+            }
+            QHeaderView::section {
+                background-color: #2196F3;
+                color: white;
+                padding: 5px;
+                border: none;
+            }
+        """)
+
+        # layout principal
+        self.layout_principal = QVBoxLayout()
+        self.layout_principal.addWidget(self.w['tabla_recolecta'])
+
+        self.setLayout(self.layout_principal)
+
+    def llenarTabla(self, listado_recolecta):
+        self.w['tabla_recolecta'].setColumnCount(4)
+        self.w['tabla_recolecta'].setHorizontalHeaderLabels(
+            ['id', 'Calidad', 'Peso', 'Fecha'])
+        self.w['tabla_recolecta'].setRowCount(len(listado_recolecta))
+        for indice, recolecta in enumerate(listado_recolecta):
+            itemID = QTableWidgetItem(str(recolecta.id))
+            itemID.setFlags(itemID.flags() & ~Qt.ItemIsEditable)
+            self.w['tabla_recolecta'].setItem(indice, 0, itemID)
+            self.w['tabla_recolecta'].setItem(
+                indice, 1, QTableWidgetItem(recolecta.calidad))
+            self.w['tabla_recolecta'].setItem(
+                indice, 2, QTableWidgetItem(recolecta.peso))
+            self.w['tabla_recolecta'].setItem(
+                indice, 3, QTableWidgetItem(recolecta.fecha_recolecta))
 
 class VentanaTrabajadores(QWidget):
     def __init__(self):

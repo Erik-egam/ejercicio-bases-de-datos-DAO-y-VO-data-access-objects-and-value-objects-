@@ -2,7 +2,7 @@ from modelo import dml
 from vista import vista_gui
 from modelo.dao.TrabajadorDAO import TrabajadorDAO
 from modelo.dao.ArbolDAO import ArbolDAO
-
+from modelo.dao.RecolectaDAO import RecolectaDAO
 
 from PyQt5.QtWidgets import QApplication
 import sys
@@ -153,7 +153,9 @@ class ControladorGUI:
 
         
         def handler_ventana_recolectas():
-            self.ventana_recolectas.llenarTabla()
+            # perdon por este insulto de programacion
+            RecolectaAux = RecolectaDAO()
+            self.ventana_recolectas.llenarTabla(RecolectaAux.get_all())
             self.ventana_recolectas.show()
 
         
@@ -168,7 +170,7 @@ class ControladorGUI:
         self.ventana_principal.w['btn_Trabajadores'].clicked.connect(
             handler_llenar_tabla_trabajadores)
 
-        self.ventana_principal.w['btn_recolectas'].clicked.connect(
+        self.ventana_principal.w['btn_Recolectas'].clicked.connect(
             handler_ventana_recolectas)
 
         self.ventana_principal.w['btn_Arboles'].clicked.connect(

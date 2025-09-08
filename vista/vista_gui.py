@@ -51,7 +51,7 @@ class VentanaPrincipal(QWidget):
                     background-color: #4CAF50;
                     color: white;
                     border-radius: 10px;
-                    font-size: 14px;
+                    font-size: 25px;
                     padding: 40px;
                 }
                 QPushButton:hover {
@@ -138,7 +138,7 @@ class VentanaRecolectas(QWidget):
             self.w['tabla_recolecta'].setItem(
                 indice, 1, QTableWidgetItem(recolecta.calidad))
             self.w['tabla_recolecta'].setItem(
-                indice, 2, QTableWidgetItem(recolecta.peso))
+                indice, 2, QTableWidgetItem(int(recolecta.peso)))
             self.w['tabla_recolecta'].setItem(
                 indice, 3, QTableWidgetItem(recolecta.fecha_recolecta))
 
